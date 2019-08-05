@@ -1,0 +1,5 @@
+applications:
+- name: cal-forwarder
+  disk_quota: 64M
+  instances: 1
+  memory: 512M
