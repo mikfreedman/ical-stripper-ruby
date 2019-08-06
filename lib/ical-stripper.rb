@@ -6,11 +6,11 @@ module ICalStripper
   class Web < Sinatra::Base
     get '/calendar/**' do
       target_url = ENV['TARGET_URL'] || "http://localhost:8000"
-      url = "#{target_url}/calendar/#{params['splat'].join('/')}"
+      url = "#{target_url}/calendar#{params['splat'].join('/')}"
       puts "URL #{"*" * 10}: #{url}"
       resp = Faraday.get(url)
 
-      headers resp.headers
+      headers resp.headers.select { |k,v| !["server", "transfer-encoding","content-security-policy", "strict-transport-security"].include?(k) }
       status resp.status
 
       icals = Icalendar::Calendar.parse(resp.body.force_encoding('utf-8'))
@@ -33,7 +33,8 @@ module ICalStripper
         end
       end
 
-      icals.map(&:to_ical).join("\n")
+
+      icals.map(&:to_ical).join("\n").encode('UTF-8', 'binary', invalid: :replace, undef: :replace, replace: '')
     end
   end
 end
