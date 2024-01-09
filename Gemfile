@@ -3,4 +3,4 @@ source :rubygems
 gem 'sinatra'
 gem 'faraday'
 gem 'icalendar'
-gem 'puma'
+gem 'puma', '>= 5.6.8'
