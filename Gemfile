@@ -1,6 +1,6 @@
 source :rubygems
 
-gem 'sinatra'
+gem 'sinatra', '>= 2.0.6'
 gem 'faraday'
 gem 'icalendar'
 gem 'puma'
